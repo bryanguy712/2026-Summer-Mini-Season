@@ -84,20 +84,12 @@ void drive(float driveXRequest, float driveYRequest, float driveTurnRequest)
 
 task usercontrol()
 {
-  // User control code here, inside the loop
+	while (true)
+	{
+		float driveInput = vexRT[Ch3];
+		float strafeInput = vexRT[Ch4];
+		float turnInput = vexRT[Ch1];
 
-  while (true)
-  {
-    // This is the main execution loop for the user control program.
-    // Each time through the loop your program should update motor + servo
-    // values based on feedback from the joysticks.
-
-    // ........................................................................
-    // Insert user code here. This is where you use the joystick values to
-    // update your motors, etc.
-    // ........................................................................
-
-    // Remove this function call once you have "real" code.
-    UserControlCodePlaceholderForTesting();
-  }
+		drive(driveInput, strafeInput, turnInput);
+	}
 }
