@@ -74,6 +74,13 @@ task autonomous()
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
+void drive(float driveXRequest, float driveYRequest, float driveTurnRequest)
+{
+	motor[frontLeftMotor] = driveXRequest + driveYRequest + driveTurnRequest;
+	motor[frontRightMotor] = driveXRequest - driveYRequest - driveTurnRequest;
+	motor[backLeftMotor] = driveXRequest - driveYRequest + driveTurnRequest;
+	motor[backRightMotor] = driveXRequest + driveYRequest - driveTurnRequest;
+}
 
 task usercontrol()
 {
