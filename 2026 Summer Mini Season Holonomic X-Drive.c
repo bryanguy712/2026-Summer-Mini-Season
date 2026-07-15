@@ -105,6 +105,6 @@ task usercontrol()
 		int rotation = vexRT[Ch1];
 
 		drive(forward, strafe, rotation);
-		wait(0.05);
+		wait10Msec(5);
 	}
 }
