@@ -96,13 +96,20 @@ void drive(int forward, int strafe, int rotation)
 	motor[backRightMotor] = maxOutput(forward + strafe - rotation);
 }
 
+int inputDeadband(int value){
+	if (value < 20 || value > -20) {
+		return 0;
+	}
+	return value;
+}
+
 task usercontrol()
 {
 	while (true)
 	{
-		int forward = vexRT[Ch3];
-		int strafe = vexRT[Ch4];
-		int rotation = vexRT[Ch1];
+		int forward = inputDeadband(-vexRT[Ch3]);
+		int strafe = inputDeadband(-vexRT[Ch4]);
+		int rotation = inputDeadband(-vexRT[Ch1]);
 
 		drive(forward, strafe, rotation);
 		wait10Msec(5);
