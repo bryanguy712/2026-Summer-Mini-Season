@@ -74,22 +74,23 @@ task autonomous()
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
-void drive(float driveXRequest, float driveYRequest, float driveTurnRequest)
+void drive(int forward, int strafe, int rotation)
 {
-	motor[frontLeftMotor] = driveXRequest + driveYRequest + driveTurnRequest;
-	motor[frontRightMotor] = driveXRequest - driveYRequest - driveTurnRequest;
-	motor[backLeftMotor] = driveXRequest - driveYRequest + driveTurnRequest;
-	motor[backRightMotor] = driveXRequest + driveYRequest - driveTurnRequest;
+	motor[frontLeftMotor] = forward + strafe + rotation;
+	motor[frontRightMotor] = forward - strafe - rotation;
+	motor[backLeftMotor] = forward - strafe + rotation;
+	motor[backRightMotor] = forward + strafe - rotation;
 }
 
 task usercontrol()
 {
 	while (true)
 	{
-		float driveInput = vexRT[Ch3];
-		float strafeInput = vexRT[Ch4];
-		float turnInput = vexRT[Ch1];
+		int forward = vexRT[Ch3];
+		int strafe = vexRT[Ch4];
+		int rotation = vexRT[Ch1];
 
-		drive(driveInput, strafeInput, turnInput);
+		drive(forward, strafe, rotation);
+		wait(0.05)
 	}
 }
