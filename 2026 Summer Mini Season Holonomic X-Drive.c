@@ -31,18 +31,18 @@
 
 void pre_auton()
 {
-  // Set bStopTasksBetweenModes to false if you want to keep user created tasks
-  // running between Autonomous and Driver controlled modes. You will need to
-  // manage all user created tasks if set to false.
-  bStopTasksBetweenModes = true;
+	// Set bStopTasksBetweenModes to false if you want to keep user created tasks
+	// running between Autonomous and Driver controlled modes. You will need to
+	// manage all user created tasks if set to false.
+	bStopTasksBetweenModes = true;
 
 	// Set bDisplayCompetitionStatusOnLcd to false if you don't want the LCD
 	// used by the competition include file, for example, you might want
 	// to display your team name on the LCD in this function.
 	// bDisplayCompetitionStatusOnLcd = false;
 
-  // All activities that occur before the competition starts
-  // Example: clearing encoders, setting servo positions, ...
+	// All activities that occur before the competition starts
+	// Example: clearing encoders, setting servo positions, ...
 }
 
 /*---------------------------------------------------------------------------*/
@@ -57,12 +57,12 @@ void pre_auton()
 
 task autonomous()
 {
-  // ..........................................................................
-  // Insert user code here.
-  // ..........................................................................
+	// ..........................................................................
+	// Insert user code here.
+	// ..........................................................................
 
-  // Remove this function call once you have "real" code.
-  AutonomousCodePlaceholderForTesting();
+	// Remove this function call once you have "real" code.
+	AutonomousCodePlaceholderForTesting();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -74,12 +74,26 @@ task autonomous()
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
+
+int maxOutput(int value)
+{
+	if (value > 127)
+	{
+		value = 127;
+	}
+	if (value < -127)
+	{
+		value = -127;
+	}
+	return value;
+}
+
 void drive(int forward, int strafe, int rotation)
 {
-	motor[frontLeftMotor] = forward + strafe + rotation;
-	motor[frontRightMotor] = forward - strafe - rotation;
-	motor[backLeftMotor] = forward - strafe + rotation;
-	motor[backRightMotor] = forward + strafe - rotation;
+	motor[frontLeftMotor] = maxOutput(forward + strafe + rotation);
+	motor[frontRightMotor] = maxOutput(forward - strafe - rotation);
+	motor[backLeftMotor] = maxOutput(forward - strafe + rotation);
+	motor[backRightMotor] = maxOutput(forward + strafe - rotation);
 }
 
 task usercontrol()
@@ -91,6 +105,6 @@ task usercontrol()
 		int rotation = vexRT[Ch1];
 
 		drive(forward, strafe, rotation);
-		wait(0.05)
+		wait(0.05);
 	}
 }
